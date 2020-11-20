@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoVis</title>
+</head>
+<body>
+    <div>
+        <h2>Selecione um dataset</h2>
+        <select name="presets" id="presets-select" onchange="handlePath(this)">
+            <option value="none">Titanic</option>
+            <option value="titanic">Titanic</option>
+        </select>
+        <input type="file" id="input" onchange="handleFiles(this.files)">
+    </div>
+    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
+    <script src="./presets.js"></script>
+    <script>
+        var _res = Object();
+
+        function handlePath(selectObject) {
+            var value = selectObject.value;
+
+            console.log(value);
+            _res.data = x[value];
+            console.log(_res)
+            alert(_res.data.length)
+        }
+
+        function handleFiles(file) {
+            var files = file;
+            if (files.length === 0) {
+                console.log('No file is selected');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                _res = Papa.parse(event.target.result);
+                console.log(_res)
+                alert(_res.data.length)
+            }
+            var res = reader.readAsText(files[0]);
+        }
+    </script>
+</body>
+</html>
